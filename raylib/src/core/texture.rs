@@ -8,8 +8,7 @@ use crate::ffi;
 use std::convert::TryInto;
 use std::ffi::CString;
 use std::mem::ManuallyDrop;
-use std::os::raw::c_void;
-use std::ptr::{null, null_mut};
+use std::ptr::null_mut;
 
 use super::math::Vector2;
 

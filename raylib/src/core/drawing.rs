@@ -11,13 +11,12 @@ use crate::core::vr::VrStereoConfig;
 use crate::core::{RaylibHandle, RaylibThread};
 use crate::ffi;
 use crate::math::Matrix;
-use crate::models::{Mesh, WeakMaterial};
-use crate::text::Codepoints;
+use crate::models::WeakMaterial;
 use std::convert::AsRef;
 use std::ffi::CString;
 
 use super::camera::Camera2D;
-use super::shaders::{Shader, ShaderV};
+use super::shaders::{Shader};
 
 /// Seems like all draw commands must be issued from the main thread
 impl RaylibHandle {
@@ -111,6 +110,8 @@ where
     /// Begin drawing to render texture.
     /// Prefer using the closure version, [RaylibTextureModeExt::draw_texture_mode] . This version returns a handle that calls [raylib_sys::EndTextureMode] at the end of the scope and is provided as a fallback incase you run into issues with closures(such as lifetime or performance reasons)
     #[must_use]
+    // @hack: Just supressing a warning because I dont wanna figure it out but this is cluttering up what's using this lib
+    #[allow(elided_named_lifetimes)]
     fn begin_texture_mode<'a>(
         &'a mut self,
         _: &RaylibThread,
@@ -159,6 +160,8 @@ where
     /// Begin stereo rendering (requires VR simulator).
     /// Prefer using the closure version, [RaylibVRModeExt::draw_vr_stereo_mode] . This version returns a handle that calls [raylib_sys::EndVrStereoMode] at the end of the scope and is provided as a fallback incase you run into issues with closures(such as lifetime or performance reasons)
     #[must_use]
+    // @hack: Just supressing a warning because I dont wanna figure it out but this is cluttering up what's using this lib
+    #[allow(elided_named_lifetimes)]
     fn begin_vr_stereo_mode<'a>(
         &'a mut self,
         _: &RaylibThread,
@@ -321,7 +324,9 @@ where
     /// Begin custom shader drawing.
     /// Prefer using the closure version, [RaylibShaderModeExt::draw_shader_mode]. This version returns a handle that calls [raylib_sys::EndShaderMode] at the end of the scope and is provided as a fallback incase you run into issues with closures(such as lifetime or performance reasons)
     #[must_use]
-    fn begin_shader_mode<'a>(&'a mut self, shader: &'a mut Shader) -> RaylibShaderMode<Self> {
+    // @hack: Just supressing a warning because I dont wanna figure it out but this is cluttering up what's using this lib
+    #[allow(elided_named_lifetimes)]
+    fn begin_shader_mode<'a, 'b>(&'a mut self, shader: &'a mut Shader) -> RaylibShaderMode<Self> {
         unsafe { ffi::BeginShaderMode(*shader.as_ref()) }
         RaylibShaderMode(self, shader)
     }

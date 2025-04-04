@@ -1,5 +1,4 @@
 //! Code for the safe manipulation of shaders
-use thiserror::Error;
 
 use crate::consts::ShaderUniformDataType;
 use crate::core::math::Matrix;

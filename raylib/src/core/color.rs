@@ -1,10 +1,8 @@
 //! [`Color`] manipulation helpers
-use std::os::raw::c_void;
 
 use crate::core::math::{Vector3, Vector4};
 use crate::ffi;
 
-use raylib_sys::{ColorIsEqual, GetPixelColor, PixelFormat};
 #[cfg(not(feature = "with_serde"))]
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
@@ -17,7 +15,6 @@ use serde::{Deserialize, Serialize};
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-use super::RaylibHandle;
 
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default)]
